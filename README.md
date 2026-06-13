@@ -1,8 +1,8 @@
-# Sistem Manajemen Dokumen 
+# Sistem Manajemen Dokumen Terpadu (Monokrom UI)
 
 Proyek ini adalah implementasi antarmuka Sistem Informasi Manajemen Dokumen dengan desain monokrom yang compact. Sistem ini dirancang untuk mendigitalisasi proses pengajuan, pelaporan, dan pengesahan dokumen secara internal guna menggantikan proses manual berbasis kertas. Dibangun menggunakan PHP Native, MySQL, Bootstrap 5, dan DataTables.
 
-## 🚀 Status Implementasi Fitur 
+## 🚀 Status Implementasi Fitur (100% Selesai)
 - **Login:** Autentikasi sesi (Session-based) untuk membatasi akses pengguna.
 - **CRUD + Upload Multiple File:** Fungsionalitas penambahan dokumen dengan unggahan lampiran jamak. File disimpan ke direktori lokal dan direlasikan pada database MySQL. Fitur Update dan Delete berjalan sempurna.
 - **Pencarian Data & Datatable:** Integrasi DataTables untuk fitur Search instan dan tombol Export (Excel, PDF, Print).
