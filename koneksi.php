@@ -1,12 +1,12 @@
 <?php
-$host = "localhost";
-$user = "root";       // Sesuaikan dengan user XAMPP/Laragon kamu
-$pass = "";           // Sesuaikan password database kamu
-$db   = "db_dokumen_monokrom";
+$host = "localhost"; 
+$user = "ifummiid_kelasc"; 
+$pass = "pemweb_db_c"; 
+$db   = "ifummiid_kelasc";
 
 $conn = mysqli_connect($host, $user, $pass, $db);
 
 if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+    die("Koneksi ke database kelas gagal: " . mysqli_connect_error());
 }
 ?>
