@@ -117,14 +117,17 @@ if (isset($_GET['logout'])) {
                             <tr>
                                 <th style="width: 5%;">#</th>
                                 <th><i class="bi bi-file-earmark-text me-1"></i> Nama Dokumen</th>
-                                <th style="width: 15%;"><i class="bi bi-paperclip me-1"></i> Lampiran</th>
+                                <th style="width: 20%;"><i class="bi bi-paperclip me-1"></i> Lampiran & Pratinjau</th>
                                 <th style="width: 15%;"><i class="bi bi-pen me-1"></i> Status TTD</th>
                                 <th style="width: 15%;"><i class="bi bi-gear me-1"></i> Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT d.id, d.nama_dokumen, d.tanda_tangan, COUNT(l.id) as jml_lampiran 
+                            // Query diupdate untuk fitur Pratinjau
+                            $query = "SELECT d.id, d.nama_dokumen, d.tanda_tangan, 
+                                      COUNT(l.id) as jml_lampiran,
+                                      GROUP_CONCAT(l.nama_file SEPARATOR '||') as daftar_file
                                       FROM dokumen_farel_2430511047 d 
                                       LEFT JOIN lampiran_farel_2430511047 l ON d.id = l.dokumen_id 
                                       GROUP BY d.id ORDER BY d.id DESC";
@@ -136,10 +139,25 @@ if (isset($_GET['logout'])) {
                                     ? '<span class="badge bg-success bg-opacity-10 text-success border border-success px-3 py-2 w-100"><i class="bi bi-check-circle me-1"></i> Selesai</span>' 
                                     : '<span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary px-3 py-2 w-100"><i class="bi bi-clock me-1"></i> Menunggu</span>';
                                 
+                                // LOGIKA PRATINJAU FILE
+                                $badge_lampiran = "<span class='badge bg-light text-dark border shadow-sm mb-1 d-block'><i class='bi bi-files'></i> {$row['jml_lampiran']} File</span>";
+                                $link_file = "";
+                                
+                                if (!empty($row['daftar_file'])) {
+                                    $files = explode('||', $row['daftar_file']);
+                                    foreach ($files as $index => $file) {
+                                        $urutan = $index + 1;
+                                        $link_file .= "<a href='uploads/{$file}' target='_blank' class='btn btn-sm btn-outline-dark py-0 px-1 mb-1 me-1' style='font-size: 0.75rem;' title='Lihat File {$urutan}'><i class='bi bi-eye'></i> Buka {$urutan}</a>";
+                                    }
+                                }
+                                
                                 echo "<tr>
                                         <td class='text-center fw-bold text-muted'>{$no}</td>
                                         <td class='fw-medium'>{$row['nama_dokumen']}</td>
-                                        <td class='text-center'><span class='badge bg-light text-dark border shadow-sm'><i class='bi bi-files'></i> {$row['jml_lampiran']} File</span></td>
+                                        <td class='text-center'>
+                                            {$badge_lampiran}
+                                            <div class='mt-1'>{$link_file}</div>
+                                        </td>
                                         <td class='text-center'>{$status_ttd}</td>
                                         <td class='text-center'>
                                             <div class='btn-group shadow-sm'>
